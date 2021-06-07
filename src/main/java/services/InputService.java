@@ -1,6 +1,6 @@
 package services;
 
-import enums.GridValue;
+import models.GridCoord;
 import models.Input;
 
 import java.util.HashSet;
@@ -33,7 +33,7 @@ public class InputService {
             return false;
         }
         char command = input.getCommand();
-        return VALID_INPUTS.contains(command) || command == 0;
+        return VALID_INPUTS.contains(command);
     }
 
     public boolean isInputQuit(Input input) {
@@ -46,18 +46,20 @@ public class InputService {
 
     private Input parseInput(char command) {
         Input input = new Input(command);
+        GridCoord gridCoord = null;
         switch (command) {
-            case 't': input.setGridValue(GridValue.TOP_LEFT); break;
-            case 'y': input.setGridValue(GridValue.TOP_CTR); break;
-            case 'u': input.setGridValue(GridValue.TOP_RIGHT); break;
-            case 'g': input.setGridValue(GridValue.MID_LEFT); break;
-            case 'h': input.setGridValue(GridValue.MID_CTR); break;
-            case 'j': input.setGridValue(GridValue.MID_RIGHT); break;
-            case 'b': input.setGridValue(GridValue.BOT_LEFT); break;
-            case 'n': input.setGridValue(GridValue.BOT_CTR); break;
-            case 'm': input.setGridValue(GridValue.BOT_RIGHT); break;
+            case 't': gridCoord = new GridCoord(0, 0); break;
+            case 'y': gridCoord = new GridCoord(0, 1); break;
+            case 'u': gridCoord = new GridCoord(0, 2); break;
+            case 'g': gridCoord = new GridCoord(1, 0); break;
+            case 'h': gridCoord = new GridCoord(1, 1); break;
+            case 'j': gridCoord = new GridCoord(1, 2); break;
+            case 'b': gridCoord = new GridCoord(2, 0); break;
+            case 'n': gridCoord = new GridCoord(2, 1); break;
+            case 'm': gridCoord = new GridCoord(2, 2); break;
             default: break;
         }
+        input.setGridCoord(gridCoord);
         return input;
     }
 
