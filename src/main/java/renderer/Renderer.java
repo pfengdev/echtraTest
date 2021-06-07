@@ -6,8 +6,8 @@ import models.GameState;
 public class Renderer {
 
     public void render(GameState gameState) {
-        System.out.println(gameState.getMessage());
         printGrid(gameState);
+        System.out.println(gameState.getMessage());
     }
 
     private void printGrid(GameState gameState) {

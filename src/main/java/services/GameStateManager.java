@@ -9,19 +9,35 @@ import static messages.Message.*;
 
 public class GameStateManager {
 
-    private GameState gameState;
-    private InputService inputService;
-
     private static final boolean PLAYER = true;
     private static final boolean COMPUTER = false;
+
+
+    private GameState gameState;
+    private InputService inputService;
+    private boolean init;
+
 
     public GameStateManager() {
         inputService = new InputService();
         gameState = new GameState();
+        init = true;
     }
 
     public GameState updateGameState(Input input) {
         clearMessage();
+
+        if (init) {
+            init = false;
+            addMessage(WELCOME_1);
+            addMessage(WELCOME_2);
+            addMessage(WELCOME_3);
+            addMessage(WELCOME_4);
+            addMessage(WELCOME_5);
+            addMessage(ENTER_INPUT);
+            return gameState;
+        }
+
         if (!inputService.isInputValid(input)) {
             addMessage(INPUT_INVALID);
             addMessage(ENTER_INPUT);
