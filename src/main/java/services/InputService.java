@@ -11,8 +11,11 @@ public class InputService {
 
     private static Set<Character> VALID_INPUTS;
 
-    public InputService() {
+    static {
         initValidInputs();
+    }
+
+    public InputService() {
     }
 
     public Input getInput() {
@@ -30,7 +33,7 @@ public class InputService {
             return false;
         }
         char command = input.getCommand();
-        return VALID_INPUTS.contains(command);
+        return VALID_INPUTS.contains(command) || command == 0;
     }
 
     public boolean isInputQuit(Input input) {
@@ -58,7 +61,7 @@ public class InputService {
         return input;
     }
 
-    private void initValidInputs() {
+    private static void initValidInputs() {
         if (VALID_INPUTS == null) {
             VALID_INPUTS = new HashSet();
             VALID_INPUTS.add('q');

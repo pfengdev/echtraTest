@@ -13,22 +13,19 @@ public class Main {
     public Main() {
         gameStateManager = new GameStateManager();
         inputService = new InputService();
+        renderer = new Renderer();
     }
 
     public static void main(String[] args) {
         Main main = new Main();
+        Input input = new Input();
         while (!main.gameOver()) {
-            System.out.print("Please enter a command: ");
-            Input input = main.getInput();
-            if (!main.isInputValid(input)) {
-                System.out.println("Input is invalid. Please try again.");
-                continue;
-            }
+            GameState gameState = main.updateGameState(input);
+            main.render(gameState);
+            input = main.getInput();
             if (main.isInputQuit(input)) {
                 break;
             }
-            GameState gameState = main.updateGameState(input);
-            main.render(gameState);
         }
     }
 
