@@ -1,6 +1,5 @@
 package models;
 
-import enums.GridValue;
 import lombok.Data;
 
 @Data

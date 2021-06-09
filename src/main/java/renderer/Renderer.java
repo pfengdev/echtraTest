@@ -1,6 +1,6 @@
 package renderer;
 
-import enums.GridValue;
+import models.GridValue;
 import models.GameState;
 
 public class Renderer {

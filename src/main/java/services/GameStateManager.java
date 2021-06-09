@@ -1,11 +1,11 @@
 package services;
 
 import models.GridCoord;
-import enums.GridValue;
+import models.GridValue;
 import models.GameState;
 import models.Input;
 
-import static messages.Message.*;
+import static constants.Message.*;
 
 public class GameStateManager {
 

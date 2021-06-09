@@ -1,4 +1,4 @@
-package enums;
+package models;
 
 public enum GridValue {
     EMPTY, PLAYER, COMPUTER;
