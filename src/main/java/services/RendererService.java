@@ -1,9 +1,9 @@
-package renderer;
+package services;
 
 import models.GridValue;
 import models.GameState;
 
-public class Renderer {
+public class RendererService {
 
     public void render(GameState gameState) {
         printGrid(gameState);

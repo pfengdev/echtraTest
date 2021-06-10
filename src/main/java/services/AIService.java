@@ -20,7 +20,7 @@ public class AIService {
             for (int j = 0; j < grid[i].length; j++) {
                 if (grid[i][j] == GridValue.EMPTY) {
                     grid[i][j] = GridValue.COMPUTER;
-                    int score = getMinMaxScore(grid, 0, true);
+                    int score = getMinMaxScore(grid, 0, false);
                     if (score > maxScore) {
                         maxScore = score;
                         moveRow = i;
