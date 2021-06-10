@@ -22,7 +22,9 @@ public class Main {
         while (!main.gameOver()) {
             GameState gameState = main.updateGameState(input);
             main.render(gameState);
-            input = main.getInput();
+            if (!main.gameOver()) {
+                input = main.getInput();
+            }
             if (main.isInputQuit(input)) {
                 break;
             }
@@ -42,7 +44,7 @@ public class Main {
     }
 
     private boolean gameOver() {
-        return false;
+        return gameStateManager.isGameOver();
     }
 
     private boolean isInputValid(Input input) {

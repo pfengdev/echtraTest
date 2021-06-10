@@ -14,12 +14,12 @@ public class GameStateManager {
 
 
     private GameState gameState;
-    private InputService inputService;
+    private AIService aiService;
     private boolean init;
 
 
     public GameStateManager() {
-        inputService = new InputService();
+        aiService = new AIService();
         gameState = new GameState();
         init = true;
     }
@@ -38,19 +38,36 @@ public class GameStateManager {
             return gameState;
         }
 
-        if (!inputService.isInputValid(input)) {
+        if (inputIsEmpty(input)) {
             addMessage(INPUT_INVALID);
             addMessage(ENTER_INPUT);
             return gameState;
         }
 
         boolean success = updateGridAsPlayer(input);
-        if (success) {
+        if (success && !isGameOver()) {
             updateGridAsComputer();
         }
 
-        addMessage(ENTER_INPUT);
+        GridValue[][] grid = gameState.getGrid();
+        if (aiService.hasWinningLine(grid, GridValue.PLAYER)) {
+            addMessage(YOU_WIN);
+        } else if(aiService.hasWinningLine(grid, GridValue.COMPUTER)) {
+            addMessage(YOU_LOSE);
+        } else if(aiService.isFilled(grid)) {
+            addMessage(DRAW_GAME);
+        } else {
+            addMessage(ENTER_INPUT);
+        }
         return gameState;
+    }
+
+    public boolean isGameOver() {
+        GridValue[][] grid = gameState.getGrid();
+
+        return aiService.hasWinningLine(grid, GridValue.COMPUTER) ||
+                aiService.hasWinningLine(grid, GridValue.PLAYER) ||
+                aiService.isFilled(grid);
     }
 
     private void clearMessage() {
@@ -71,21 +88,22 @@ public class GameStateManager {
             addMessage(ALREADY_FILLED);
             return false;
         }
-        updateGrid(input, PLAYER);
+        gameState.getGrid()[row][col] = GridValue.PLAYER;
         return true;
     }
 
     private boolean updateGridAsComputer() {
-        return true;
-    }
-
-    private void updateGrid(Input input, boolean isPlayer) {
-        GridCoord gridCoord = input.getGridCoord();
-        GridValue gridValue = isPlayer == PLAYER ? GridValue.PLAYER : GridValue.COMPUTER;
-
+        GridValue[][] currGrid = gameState.getGrid();
+        GridCoord gridCoord = aiService.makeMove(currGrid);
         int row = gridCoord.getRow();
         int col = gridCoord.getCol();
 
-        gameState.getGrid()[row][col] = gridValue;
+        gameState.getGrid()[row][col] = GridValue.COMPUTER;
+        addMessage(String.format(COMPUTER_MOVED, row, col));
+        return true;
+    }
+
+    private boolean inputIsEmpty(Input input) {
+        return input == null || input.getGridCoord() == null;
     }
 }
